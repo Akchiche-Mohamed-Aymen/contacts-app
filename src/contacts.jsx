@@ -15,7 +15,13 @@ const Contacts = () => {
   const dispatch = useDispatch()
   const data = useSelector((state) => state.contacts.contactsData)
   const [id , setId] = useState(null)
+  const [currentPage, setCurrentPage] = useState(1);
+  const contactsPerPage = 5;
+  const indexOfLastContact = currentPage * contactsPerPage;
+  const indexOfFirstContact = indexOfLastContact - contactsPerPage;
   const [search , setSearch] = useState("")
+  const currentContacts = data.slice(indexOfFirstContact, indexOfLastContact);
+  const totalPages = Math.ceil(data.length / contactsPerPage);
    const update = (i)=>{
     setId(i)
     dialog.setOpen(true)
@@ -37,15 +43,32 @@ const Contacts = () => {
           icon: "success"
         });
   }})}
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  console.log(currentPage)
   const appear = useMemo(()=>{
       if(search.length === 0)
-        return data
+        return currentContacts
       const s = search.toLowerCase()
       return data.filter(item => item.user.toLowerCase().includes(s) || item.email.toLowerCase().includes(s) || item.phone.toLowerCase().includes(s) )
-  },[ data , search])
-  console.log(data , appear , search.length === 0)
+  },[  search , currentPage])
   return (
     <Flex  gap="4" direction="column" mt="15">
+        <Flex gap="4">
+           {Array.from({ length: totalPages }, (_, index) => (
+          <Button colorPalette="teal" variant="solid"
+            key={index}
+            onClick={() => handlePageChange(index + 1)}
+            disabled={currentPage === index + 1}
+          >
+            {index + 1}
+            </Button>
+        ))
+               
+           }
+        </Flex>
         <Input placeholder="Search Contact ..." width="400px" variant="outline" value = {search} onChange = {(e)=>setSearch(e.target.value)} />
         <DataListRoot orientation="vertical" divideY="1px">
           {search.length > 0 && appear.length == 0 && <h1 style={{fontSize : "30px" , textAlign : "center"}}>401 ... Contact Not Found</h1>}
