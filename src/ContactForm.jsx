@@ -7,10 +7,8 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
-  DialogRoot,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+  DialogTitle
+ } from "@/components/ui/dialog"
 import { Text } from "@chakra-ui/react"
 import { Input } from "@chakra-ui/react"
 import { DialogRootProvider} from "@chakra-ui/react"
