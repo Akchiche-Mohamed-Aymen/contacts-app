@@ -23,8 +23,8 @@ Follow these steps to run the project locally:
   git clone https://github.com/Akchiche-Mohamed-Aymen/contacts-app.git
 2. cd contacts-app
 
-3. run this command in terminal :
-    [ npm i]
+## 🚀 run this command in terminal :
+    npm i
 4. Usage
   run this command:
     [ npm run dev]
